@@ -1,0 +1,7 @@
+.aktif {
+    padding: 0;
+}
+
+.aktif:active {
+    background-color: #3559E0;
+}

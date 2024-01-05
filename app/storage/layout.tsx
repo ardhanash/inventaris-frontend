@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Dashboard',
+    title: 'Storage',
 };
 
 const DashboardLayout = ({children}: {children: React.ReactNode}) => {

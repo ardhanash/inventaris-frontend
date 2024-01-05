@@ -1,8 +1,9 @@
-import Product from "./products/page"
+import Dashboard from "./dashboard/page"
+
 
 const Home = () => {
   return (
-    <div > Home Page </div>
+    <div> <Dashboard /> </div>
   )
 }
 

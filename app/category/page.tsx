@@ -4,21 +4,21 @@ import styles from './styles.module.css'
 import Link from 'next/link'
 import SideBar from '../dashboard/sidebar'
 import axios from 'axios'
+import TambahKategori from './create'
+import DeleteKategori from './delete'
+import { useRouter } from 'next/navigation'
+import EditKategori from './edit'
 
 interface Item {
     id: number;
     category: string;
-    // Add other properties as needed
 }
 
 const CategoryTable: React.FC = () => {
 
-    // const [storage, setStorage] = useState([]);
-
-    // const [data, setData] = useState<Item[] | null>(null);
     const [data, setData] = useState<Item[]>([]);
-    // const [categorys, setCategory] = useState<Categorys[] | null>(null);
-    // const [ruangs, setRuang] = useState<Ruangs[] | null>(null);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,15 +29,33 @@ const CategoryTable: React.FC = () => {
                 setData(result.response); // Atur state dengan array dari properti 'response'
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
-
         };
 
         fetchData();
     }, []);
 
+    const router = useRouter();
 
-    console.log(data)
+    const handleDelete = async (id: number) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:3333/category/destroy/${id}`);
+            router.refresh();
+            console.log(response.data);
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Gagal menghapus data:', error);
+        }
+
+        console.log('Menghapus item dengan ID:', id);
+    };
+
+    const handleUpdateData = async (id: number) => {
+        console.log('item yg mau di edit :', id)
+    }
 
     return (
         <div>
@@ -47,14 +65,12 @@ const CategoryTable: React.FC = () => {
                 <div className="overflow-x-auto">
                     <div style={{ display: 'flex', justifyContent: 'space-between' }} >
                         <h1 style={{ fontSize: 30, fontWeight: 'bold', padding: 30 }} >Category</h1>
-
+                        <TambahKategori />
                     </div>
-
-                    <input type="text" placeholder="Search" className="input input-bordered w-full max-w-xs" style={{ marginLeft: 30, height: 30, boxShadow: 'none' }} />
 
                     <div style={{ margin: 30 }} >
 
-
+                        {loading && <span className="loading loading-bars loading-lg" style={{ position: 'fixed', left: '60%', top: '60%', backgroundColor: '#3559E0' }} ></span>}
                         {data && Array.isArray(data) ? (
                             <table className="table table-zebra w-full">
 
@@ -75,7 +91,11 @@ const CategoryTable: React.FC = () => {
                                             <td>{item.category}</td>
                                             <td>
                                                 <div style={{ display: 'flex', gap: 10 }} >
-
+                                                    <DeleteKategori id={item.id} category={item.category} onDelete={handleDelete} />
+                                                    <EditKategori
+                                                        id={item.id}
+                                                        category={item.category}
+                                                        onUpdate={handleUpdateData} />
                                                 </div>
                                             </td>
                                         </tr>

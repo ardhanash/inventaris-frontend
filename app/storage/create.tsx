@@ -19,20 +19,14 @@ interface Item {
 }
 
 interface ApiDataRuang {
-    // Sesuaikan struktur data ini dengan respons API sebenarnya
     id: number;
     ruang: string;
-    // ...
 }
 
 interface ApiDataCategory {
     id: number;
     category: string;
 }
-
-// interface ChildProps {
-//     data: Item[]
-// }
 
 const Tambah: React.FC = () => {
 
@@ -41,11 +35,9 @@ const Tambah: React.FC = () => {
 
     const handleDataRuang = (data: ApiDataRuang[]) => {
         setApiDataRuang(data)
-        console.log(data)
     };
     const handleDataCategory = (data: ApiDataCategory[]) => {
         setApiDataCategory(data)
-        console.log(data)
     };
 
     const [isOpen, setIsOpen] = useState(false);
@@ -56,25 +48,9 @@ const Tambah: React.FC = () => {
     const router = useRouter();
 
     const [newData, setNewData] = useState({
-        id: 0,
         item_code: '',
         item_name: '',
         quantity: 0,
-        created_at: '',
-        updated_at: '',
-        Category: {
-            category: ''
-        },
-        Ruang: {
-            ruang: ''
-        },
-    });const [newItem, setNewItem] = useState({
-        id: 0,
-        item_code: '',
-        item_name: '',
-        quantity: 0,
-        created_at: '',
-        updated_at: '',
         category_id: 0,
         ruang_id: 0,
     });
@@ -85,63 +61,58 @@ const Tambah: React.FC = () => {
     };
 
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedCategory = e.target.value;
+        const SelectedOption = e.target.value;
+        const { name, value } = e.target;
+
         setNewData((newData) => ({
             ...newData,
             Category: {
-                category: selectedCategory,
+                category_id: SelectedOption,
             },
         }));
+        setNewData({ ...newData, [name]: value });
     };
 
     const handleRuangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedRuang = e.target.value;
+        const SelectedOption = e.target.value;
+        const { name, value } = e.target;
+
         setNewData((newData) => ({
             ...newData,
             Ruang: {
-                ruang: selectedRuang,
+                ruang_id: SelectedOption,
             },
         }));
+        setNewData({ ...newData, [name]: value });
     };
 
-    const handleAddData = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
-        setNewItem((newItem) => ({
-            ...newItem,
-            item_code: '',
-            item_name: '',
-            quantity: 0,
-            category_id: 0,
-            ruang_id: 0,
-        }))
-        console.log('k')
-        
+    const handleAddData = async () => {
         try {
-            
-          const response = await fetch('http://127.0.0.1:3333/storage/store', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newData),
-          });
-      
-          if (response.status === 404) {
-            console.error('Error adding data. Endpoint not found (404).');
-          } else if (!response.ok) {
-            console.error('Error adding data. Status:', response.status);
-          } else {
-            const result = await response.json();
-            console.log('Parsed Result:', result);
-          }
+            const response = await fetch('http://127.0.0.1:3333/storage/store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newData),
+            });
+
+            if (response.status === 404) {
+                console.error('Error adding data. Endpoint not found (404).');
+            } else if (!response.ok) {
+                console.error('Error adding data. Status:', response.status);
+            } else {
+                const result = await response.json();
+                console.log('Parsed Result:', result);
+            }
         } catch (error) {
-          console.error('Error adding data:', error);
+            console.error('Error adding data:', error);
         }
-      
+
         router.refresh();
+        window.location.reload();
         setIsOpen(false);
-      };
-      
+    };
+
 
     return (
         <div>
@@ -196,10 +167,9 @@ const Tambah: React.FC = () => {
 
                                     <ApiCategory onDataReceived={handleDataCategory} />
 
-                                    <select className='select select-bordered' value={newData.Category.category} 
-                                    onChange={handleCategoryChange} 
-                                    >
-                                        <option disabled>
+                                    <select className='select select-bordered' name='category_id' value={newData.category_id}
+                                        onChange={handleCategoryChange}>
+                                        <option >
                                             Pilih Kategori
                                         </option>
                                         {apiDataCategory.map((Category, index) => (
@@ -215,9 +185,9 @@ const Tambah: React.FC = () => {
 
                                     <ApiRuang onDataReceived={handleDataRuang} />
 
-                                    <select className='select select-bordered' value={newData.Ruang.ruang} onChange={handleRuangChange} >
-                                        <option disabled>
-                                            Pilih Kategori
+                                    <select className='select select-bordered' name='ruang_id' value={newData.ruang_id} onChange={handleRuangChange} >
+                                        <option >
+                                            Pilih Ruang
                                         </option>
                                         {apiDataRuang.map((Ruang, index) => (
                                             <option key={index} value={Ruang.id} >

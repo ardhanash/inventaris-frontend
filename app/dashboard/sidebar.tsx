@@ -8,23 +8,24 @@ const SideBar = () => {
                 <h2 style={{ color: 'white', fontWeight: 'bold', letterSpacing: '1px', textAlign: 'center', paddingTop: 50 }} >INVENTARIS</h2>
             </div>
 
-            <div>
+            <div style={{ marginTop: 30 }} >
                 <ul className="menu w-100 p-0 [&_li>*]:rounded-none">
                     <li>
                         <Link href={'dashboard'} >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 19H9V13H15V19H18V10L12 5.5L6 10V19ZM4 21V9L12 3L20 9V21H13V15H11V21H4Z" fill="#2B2B2B" />
                             </svg>
-                            Home
+                            Dashboard
                         </Link>
                     </li>
                     <li>
                         <Link href={'storage'} >
+                            
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V8.725C2.7 8.54167 2.45833 8.30417 2.275 8.0125C2.09167 7.72083 2 7.38333 2 7V4C2 3.45 2.19583 2.97917 2.5875 2.5875C2.97917 2.19583 3.45 2 4 2H20C20.55 2 21.0208 2.19583 21.4125 2.5875C21.8042 2.97917 22 3.45 22 4V7C22 7.38333 21.9083 7.72083 21.725 8.0125C21.5417 8.30417 21.3 8.54167 21 8.725V20C21 20.55 20.8042 21.0208 20.4125 21.4125C20.0208 21.8042 19.55 22 19 22H5ZM5 9V20H19V9H5ZM4 7H20V4H4V7ZM9 14H15V12H9V14Z" fill="#2B2B2B" />
                             </svg>
-
                             Storage
+                            
                         </Link>
                     </li>
                     <li>

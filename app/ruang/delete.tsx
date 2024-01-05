@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 
 interface DeleteProps {
     id: number;
-    item_name: string;
+    ruang: string;
     onDelete: (id: number) => void;
   }
 
-  const Delete: React.FC<DeleteProps> = ({ id, item_name, onDelete }) => {
+  const DeleteRuang: React.FC<DeleteProps> = ({ id, ruang, onDelete }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const handleModal = () => {
@@ -38,7 +38,7 @@ return (
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModal}>✕</button>
                 </form>
 
-                <h3 className="font-bold text-lg">Are you sure to delete {item_name} ? </h3>
+                <h3 className="font-bold text-lg">Are you sure to delete {ruang} ? </h3>
                 <form>
                     <br />
                     <div className='modal-action'>
@@ -51,4 +51,4 @@ return (
     </div>
 )}
 
-export default Delete
+export default DeleteRuang

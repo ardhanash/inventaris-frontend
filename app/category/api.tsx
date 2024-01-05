@@ -10,8 +10,7 @@ interface ApiData {
     category: string;
 }
 
-
-  const ApiCategory: React.FC<{ onDataReceived: (data: ApiData[]) => void }> = ({ onDataReceived }) => {
+const ApiCategory: React.FC<{ onDataReceived: (data: ApiData[]) => void }> = ({ onDataReceived }) => {
 
     const [data, setData] = useState<ApiData[]>([]);
 

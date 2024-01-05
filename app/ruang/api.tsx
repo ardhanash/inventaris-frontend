@@ -10,10 +10,7 @@ interface ApiData {
     ruang: string;
 }
 
-
-
-
-  const ApiRuang: React.FC<{ onDataReceived: (data: ApiData[]) => void }> = ({ onDataReceived }) => {
+const ApiRuang: React.FC<{ onDataReceived: (data: ApiData[]) => void }> = ({ onDataReceived }) => {
 
     const [data, setData] = useState<ApiData[]>([]);
 
